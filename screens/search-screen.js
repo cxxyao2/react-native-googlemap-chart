@@ -21,7 +21,6 @@ class SearchScreen extends Component {
   };
   submitSearch = () => {
     this.props.getCurrentWeatherByCity(this.state.search);
-    console.log(this.state.search);
   };
 
   constructor(props) {
@@ -46,7 +45,10 @@ class SearchScreen extends Component {
           }}
         />
         {this.props.currentWeather && (
-          <WeatherCard currentWeather={this.props.currentWeather} />
+          <WeatherCard
+            {...this.props}
+            currentWeather={this.props.currentWeather}
+          />
         )}
         <SearchBar
           LightTheme

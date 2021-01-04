@@ -4,7 +4,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+
 import { kelvinToCelcius } from "../services/temperature";
+
 import { Button } from "react-native-elements";
 
 const CARD_INITIAL_POSITION_Y = hp("80%");
@@ -14,10 +16,19 @@ const TRESHOLD_TO_BOTTOM = hp("70%");
 const CARD_OPEN_POSITION = hp("45%");
 const MAX_DRAG_ZONE_WHEN_OPEN = hp("65%");
 const ICON_URL = "http://openweathermap.org/img/w/";
-export default class WeatherCard extends Component {
+class WeatherCard extends Component {
   state = { panResponder: undefined, isOpen: false };
 
   componentDidMount() {
+    this.onFocusListener = this.props.navigation.addListener(
+      "willFocus",
+      (e) => {
+        e.preventDefault();
+        this.setState({ isOpen: false });
+        this.resetPosition();
+      }
+    );
+
     this.position = new Animated.ValueXY();
     this.position.setValue({
       x: CARD_INITIAL_POSITION_X,
@@ -91,6 +102,13 @@ export default class WeatherCard extends Component {
       ...this.position.getLayout(),
     };
   }
+
+  goToDetail = () => {
+    this.props.navigation.push("AdvancedDetail", {
+      city: this.props.currentWeather.name,
+    });
+  };
+
   renderMoreDetail() {
     return (
       <View>
@@ -113,7 +131,7 @@ export default class WeatherCard extends Component {
         <Button
           style={{ marginTop: hp("3%"), width: wp("80%") }}
           title="See 5 days forecast"
-          onPress={() => console.log("todo")}
+          onPress={this.goToDetail}
         />
       </View>
     );
@@ -153,3 +171,5 @@ export default class WeatherCard extends Component {
     );
   }
 }
+
+export default WeatherCard;
