@@ -4,6 +4,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { kelvinToCelcius } from "../services/temperature";
+import { Button } from "react-native-elements";
 
 const CARD_INITIAL_POSITION_Y = hp("80%");
 const CARD_INITIAL_POSITION_X = wp("5%");
@@ -89,7 +91,33 @@ export default class WeatherCard extends Component {
       ...this.position.getLayout(),
     };
   }
-
+  renderMoreDetail() {
+    return (
+      <View>
+        <View style={{ alignItems: "center" }}>
+          <Text>Humidity: {this.props.currentWeather.main.humidity}</Text>
+          <Text>Pressure: {this.props.currentWeather.main.pressure}</Text>
+          <Text>
+            Max temperature:{" "}
+            {kelvinToCelcius(this.props.currentWeather.main.temp_max)}
+          </Text>
+          <Text>
+            Min temperature:{" "}
+            {kelvinToCelcius(this.props.currentWeather.main.temp_min)}
+          </Text>
+          <Text>
+            Wind Speed:
+            {this.props.currentWeather.wind.speed}
+          </Text>
+        </View>
+        <Button
+          style={{ marginTop: hp("3%"), width: wp("80%") }}
+          title="See 5 days forecast"
+          onPress={() => console.log("todo")}
+        />
+      </View>
+    );
+  }
   renderHeader() {
     return (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -98,7 +126,7 @@ export default class WeatherCard extends Component {
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Text style={{ marginTop: hp("1%"), fontSize: 35 }}>
-            {this.props.currentWeather.main.temp + "℃"}
+            {kelvinToCelcius(this.props.currentWeather.main.temp) + "℃"}
           </Text>
           <Image
             style={{ height: 60, width: 60 }}
@@ -107,6 +135,7 @@ export default class WeatherCard extends Component {
             }}
           ></Image>
         </View>
+        {this.state.isOpen && this.renderMoreDetail()}
       </View>
     );
   }
