@@ -20,10 +20,7 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.cxxyao2.renative_maps"
     },
     "web": {
       "favicon": "./assets/favicon.png"
