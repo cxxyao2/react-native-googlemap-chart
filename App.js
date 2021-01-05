@@ -8,6 +8,7 @@ import { View, Text, Button } from "react-native";
 import store from "./store";
 import AdvancedDetailScreen from "./screens/advanced-detail-screen";
 import SearchScreen from "./screens/search-screen";
+import IndexScreen from "./screens/index-screen";
 
 const Stack = createStackNavigator();
 const NestedStack = createStackNavigator();
@@ -15,7 +16,8 @@ const NestedStack = createStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <Provider store={store}>
-      <NestedStack.Navigator mode="modal">
+      <NestedStack.Navigator mode="modal" initialRouteName="Index">
+        <NestedStack.Screen name="Index" component={IndexScreen} />
         <NestedStack.Screen name="Search" component={SearchScreen} />
         <NestedStack.Screen
           name="AdvancedDetail"
