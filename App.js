@@ -9,6 +9,7 @@ import store from "./store";
 import AdvancedDetailScreen from "./screens/advanced-detail-screen";
 import SearchScreen from "./screens/search-screen";
 import IndexScreen from "./screens/index-screen";
+import ExpoNotification from "./components/expo-notification";
 
 const Stack = createStackNavigator();
 const NestedStack = createStackNavigator();
@@ -16,7 +17,8 @@ const NestedStack = createStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <Provider store={store}>
-      <NestedStack.Navigator mode="modal" initialRouteName="Index">
+      <NestedStack.Navigator mode="modal" initialRouteName="notify">
+        <NestedStack.Screen name="notify" component={ExpoNotification} />
         <NestedStack.Screen name="Index" component={IndexScreen} />
         <NestedStack.Screen name="Search" component={SearchScreen} />
         <NestedStack.Screen

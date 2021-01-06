@@ -5,16 +5,19 @@ import { facebookLogin } from "../actions/index";
 import * as Facebook from "expo-facebook";
 
 import { FACEBOOK_APP_ID } from "../constant";
+import { subscribeToPushNotifications } from "../services/notification";
 
 class IndexScreen extends Component {
   componentDidAmount() {
+    subscribeToPushNotifications();
     const { token } = this.props.loginKey; //TODO
     console.log("token is", token);
+    console.log("notification service is ...");
 
     if (token) {
       this.goToSearch();
     } else {
-      this.props.facebookLogin(this.goToSearch);
+      // this.props.facebookLogin(this.goToSearch);
     }
   }
   // TODO
@@ -37,6 +40,7 @@ class IndexScreen extends Component {
         const response = await fetch(
           `https://graph.facebook.com/me?access_token=${token}`
         );
+        console.log("facebook token is", token);
         alert("Logged in!", `Hi ${(await response.json()).name}!`);
       } else {
         // type === 'cancel'
@@ -55,12 +59,13 @@ class IndexScreen extends Component {
     return (
       <View>
         <Button
-          title="oldLoginIn"
+          title="old_Login2"
           onPress={() => {
             const { token } = this.props.loginKey; //TODO
             console.log("token is", token);
             console.log(this.props);
-            this.props.facebookLogin(this.goToSearch);
+            subscribeToPushNotifications();
+            // this.props.facebookLogin(this.goToSearch);
           }}
         ></Button>
         <Button title="Facebook" onPress={this.logIn}></Button>
