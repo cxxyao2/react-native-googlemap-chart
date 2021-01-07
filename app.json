@@ -19,7 +19,8 @@
     },
     "android": {
       "package": "com.cxxyao2.renative_maps",
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

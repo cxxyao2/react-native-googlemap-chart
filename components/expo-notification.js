@@ -3,7 +3,9 @@ import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, Button, Platform } from "react-native";
+import axios from "axios";
 
+// sample can work.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -12,7 +14,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function ExpoNotification() {
+export default function ExpoNotification({ navigation }) {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -66,6 +68,10 @@ export default function ExpoNotification() {
           await schedulePushNotification();
         }}
       />
+      <Button
+        title="getFromServer"
+        onPress={async () => await getNotificationFromServer()}
+      ></Button>
     </View>
   );
 }
@@ -78,6 +84,17 @@ async function schedulePushNotification() {
       data: { data: "goes here" },
     },
     trigger: { seconds: 2 },
+  });
+}
+
+async function getNotificationFromServer() {
+  Notifications.getExpoPushTokenAsync().then((token) => {
+    axios
+      .get("https://node-notification.herokuapp.com/?token=" + token.data)
+      .then((axiosResponse) => {
+        console.log("axios Response ", axiosResponse.data);
+      })
+      .catch((err) => console.error("err", err.message));
   });
 }
 

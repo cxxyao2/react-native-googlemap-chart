@@ -5,11 +5,9 @@ import { facebookLogin } from "../actions/index";
 import * as Facebook from "expo-facebook";
 
 import { FACEBOOK_APP_ID } from "../constant";
-import { subscribeToPushNotifications } from "../services/notification";
 
 class IndexScreen extends Component {
   componentDidAmount() {
-    subscribeToPushNotifications();
     const { token } = this.props.loginKey; //TODO
     console.log("token is", token);
     console.log("notification service is ...");
@@ -58,16 +56,6 @@ class IndexScreen extends Component {
   render() {
     return (
       <View>
-        <Button
-          title="old_Login2"
-          onPress={() => {
-            const { token } = this.props.loginKey; //TODO
-            console.log("token is", token);
-            console.log(this.props);
-            subscribeToPushNotifications();
-            // this.props.facebookLogin(this.goToSearch);
-          }}
-        ></Button>
         <Button title="Facebook" onPress={this.logIn}></Button>
       </View>
     );
